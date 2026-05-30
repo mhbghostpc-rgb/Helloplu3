@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hello Plus 3 Prep - Unit 8 L 3,5&6  | Mr. Moheb Mousa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/auth.js"></script>
+  <script>
+    if (window.Auth) {
+      window.Auth.guardMainPage();
+    } else {
+      window.location.replace("login.html");
+    }
+  </script>
+  <style>
+    :root {
+      --neon-pink: #ff00c1;
+      --neon-blue: #00ffff;
+      --neon-green: #39ff14;
+      --dark-bg: #0d1117;
+      --card-bg: #161b22;
+      --text-color: #f0f6fc;
+      --highlight-color: #ffff00; /* لون أصفر فسفوري */
+      --transition-speed: 0.3s;
+    }
+    body.light-mode {
+      --dark-bg: #f0f6fc;
+      --card-bg: #fff;
+      --text-color: #0d1117;
+      --neon-pink: #d6009a;
+      --neon-blue: #00f;
+      --neon-green: #080;
+      --highlight-color: #ffcc00;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; text-align: right; }
+    body { 
+        background-color: var(--dark-bg);
+        color: var(--text-color); 
+        padding: 20px; 
+        transition: background-color .5s, color .5s; 
+        background-image: linear-gradient(45deg, var(--dark-bg) 0%, #2c3e50 100%);
+        overflow-x: hidden;
+    }
+    header { text-align: center; margin-bottom: 24px; }
+    .header-title { font-size: 2rem; color: var(--neon-blue); text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); border-bottom: 2px solid var(--neon-pink); display: inline-block; padding: 8px 0; }
+
+    /* Modal Styles */
+    #welcome-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); z-index: 2000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+    #welcome-modal-overlay.hidden { opacity: 0; pointer-events: none; }
+    .welcome-modal-content { background: rgba(22, 27, 34, 0.75); border-radius: 20px; padding: 30px 40px; text-align: center; max-width: 550px; width: 90%; border: 2px solid transparent; background-clip: padding-box; box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); position: relative; overflow: hidden; max-height: 90vh; overflow-y: auto; }
+    .welcome-modal-content::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: -1; margin: -2px; border-radius: inherit; background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-green)); animation: rotate-border 4s linear infinite; }
+    @keyframes rotate-border { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .neon-subtitle { font-size: 2.5rem; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 8px var(--neon-blue), 0 0 15px var(--neon-blue), 0 0 25px var(--neon-blue); margin-bottom: 15px; width: 100%; text-align: center; }
+    .welcome-message { font-size: 1.2rem; color: #e0e0e0; margin-bottom: 25px; text-shadow: 0 0 3px rgba(0,0,0,0.5); }
+    .contact-info { margin-top: 25px; border-top: 1px dashed var(--neon-blue); padding-top: 20px; }
+    .contact-info p { font-size: 1.3rem; font-weight: bold; color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green); margin-bottom: 15px; }
+    .contact-info a { display: inline-flex; align-items: center; gap: 10px; color: var(--text-color); text-decoration: none; font-size: 1.2rem; margin: 5px 10px; padding: 8px 15px; border: 1px solid var(--neon-blue); border-radius: 8px; transition: all 0.3s ease; }
+    .contact-info a:hover { background-color: var(--neon-blue); color: var(--dark-bg); box-shadow: 0 0 15px var(--neon-blue); transform: scale(1.05); }
+
+    #modal-error-msg { color: var(--neon-pink); margin-top: 15px; font-weight: bold; display: none; }
+    #user-info-form { margin-bottom: 10px; }
+    #user-info-form input { padding: 10px; border-radius: 6px; border: 1px solid var(--neon-blue); background: var(--dark-bg); color: var(--text-color); font-size: 1rem; text-align: right; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
+    #start-learning-btn { width: 100%; font-size: 1.2rem; padding: 12px; }
+
+    /* Controls & Inputs */
+    .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 24px; padding: 16px; background: var(--card-bg); border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,.5); }
+    .control-group { display: flex; flex-direction: column; gap: 6px; }
+    .control-group label { color: var(--neon-pink); font-size: .9rem; text-shadow: 0 0 3px var(--neon-pink); }
+    #searchInput { padding: 12px; border-radius: 8px; border: 2px solid var(--neon-blue); background: var(--dark-bg); color: var(--neon-green); font-size: 1.1rem; text-align: right; direction: rtl; width: 100%; transition: border-color var(--transition-speed); }
+    #searchInput:focus { outline: none; border-color: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink); }
+    button { background: var(--neon-green); color: var(--dark-bg); border: 0; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 700; box-shadow: 0 0 5px var(--neon-green); transition: background-color var(--transition-speed), transform .1s; }
+    button:hover { background: #66ff66; transform: translateY(-2px); }
+    
+    #stop-reading-btn { position: fixed; top: 20px; left: 20px; z-index: 1000; background-color: #ff1439; color: white; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; border: 2px solid white; box-shadow: 0 0 10px #ff1439, 0 0 20px #ff1439; display: flex; align-items: center; justify-content: center; }
+    
+    /* Pronunciation Counter */
+    #pronunciation-counter { position: fixed; bottom: 20px; left: 20px; z-index: 999; background: var(--card-bg); border: 2px solid var(--neon-blue); padding: 8px 12px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); display: flex; flex-direction: column; gap: 3px; font-size: 0.9rem; transition: background-color 0.3s; }
+    body.light-mode #pronunciation-counter { background: #fff; }
+
+    /* Tabs System */
+    .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; direction: ltr; }
+    .tab-btn { background: #1f2730; color: var(--text-color); border: 2px solid transparent; padding: 10px 20px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: 0.3s; font-family: 'Segoe UI', sans-serif;}
+    .tab-btn.active { background: var(--dark-bg); border-color: var(--neon-blue); color: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
+    .tab-content { display: none; animation: fadeIn 0.5s; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Grid & Cards */
+    .section-container { margin-top: 24px; }
+    .section-title { font-size: 1.6rem; color: var(--neon-pink); border-bottom: 3px dashed var(--neon-pink); padding-bottom: 6px; margin-bottom: 14px; text-align: left; direction: ltr; font-family: 'Segoe UI', sans-serif;}
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    
+    /* === Neon Phosphorous Highlight Effect === */
+    @keyframes phosphor-pulse {
+        0% { box-shadow: inset 0 0 10px var(--highlight-color), 0 0 10px var(--highlight-color); background-color: rgba(255, 255, 0, 0.15); }
+        100% { box-shadow: inset 0 0 30px var(--highlight-color), 0 0 30px var(--highlight-color); background-color: rgba(255, 255, 0, 0.4); }
+    }
+    
+    .word-card.highlight { 
+        animation: phosphor-pulse 0.6s infinite alternate; 
+        border-color: var(--highlight-color);
+        transform: scale(1.02);
+        z-index: 5;
+    }
+    
+    td.highlight { 
+        animation: phosphor-pulse 0.6s infinite alternate !important; 
+        color: var(--highlight-color) !important; 
+        border: 2px solid var(--highlight-color) !important;
+        position: relative;
+        z-index: 10;
+        border-radius: 6px;
+    }
+
+    span.highlight {
+        animation: phosphor-pulse 0.6s infinite alternate !important; 
+        color: var(--highlight-color) !important;
+        border-radius: 4px;
+        padding: 3px 6px;
+        display: inline-block;
+    }
+
+    .word-card { background: var(--card-bg); border: 1px solid var(--neon-blue); border-radius: 12px; padding: 16px; box-shadow: 0 0 10px rgba(0,0,0,.5); transition: transform .2s, border-color var(--transition-speed); cursor: pointer; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .word-card:hover { transform: translateY(-4px); border-color: var(--neon-pink); }
+
+    .card-tools { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; z-index: 10; }
+    .tool-btn { background: rgba(0,0,0,0.7); color: var(--neon-blue); border: 1px dashed var(--neon-blue); padding: 5px 8px; border-radius: 6px; font-size: 1rem; cursor: pointer; transition: 0.2s;}
+    .tool-btn:hover { background: var(--neon-blue); color: #000; transform: scale(1.1); }
+    .tool-btn.active-star { background: var(--highlight-color); color: #000; border-color: var(--highlight-color); box-shadow: 0 0 5px var(--highlight-color); }
+    
+    .voice-feedback { margin-top: 5px; font-size: 0.95rem; font-weight: bold; text-align: left; direction: ltr; min-height: 20px;}
+    .voice-feedback.success { color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green); }
+    .voice-feedback.error { color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink); }
+    
+    .word-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--neon-green); background: #0b0f14; }
+    .word-card h3 { font-size: 1.35rem; color: var(--neon-blue); margin: 4px 0; text-align: left; direction: ltr; font-family: 'Segoe UI', sans-serif;}
+    .word-card p { font-size: 1rem; color: var(--text-color); }
+    .arabic-word { font-weight: 700; color: var(--neon-pink); border-bottom: 1px dashed var(--neon-pink); padding-bottom: 4px; margin-bottom: 8px; }
+    .img-status { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,.55); color: #fff; padding: 2px 8px; font-size: .8rem; border-radius: 6px; }
+
+    .card-mini-actions { display: flex; gap: 8px; margin-top: 12px; justify-content: center; }
+    .card-mini-actions button { font-size: 0.85rem; padding: 6px 5px; flex: 1; border-radius: 6px; }
+    .btn-play-here { background: var(--neon-blue); color: var(--dark-bg); box-shadow: 0 0 5px var(--neon-blue); }
+    .btn-play-here:hover { background: #66ffff; }
+    .btn-memo-here { background: var(--neon-pink); color: var(--text-color); box-shadow: 0 0 5px var(--neon-pink); }
+    .btn-memo-here:hover { background: #ff33d1; }
+    .btn-review-here { background: var(--highlight-color); color: var(--dark-bg); box-shadow: 0 0 5px var(--highlight-color); }
+    .btn-review-here:hover { background: #ffff66; }
+    
+    /* Tables */
+    .info-table { width: 100%; border-collapse: collapse; margin-top: 16px; background-color: var(--card-bg); transition: background-color var(--transition-speed); border-radius: 8px; overflow: hidden; direction: ltr; margin-bottom: 20px;}
+    .info-table th, .info-table td { border: 1px solid var(--neon-blue); padding: 12px; transition: background-color var(--transition-speed); }
+    .info-table th { background-color: #1f2730; color: var(--neon-pink); font-size: 1.1rem; text-align: left; direction: ltr; font-family: 'Segoe UI', sans-serif;}
+    .info-table tr:nth-child(even) { background-color: #1a1f26; }
+    .info-table td[lang="en"] { text-align: left; direction: ltr; color: var(--neon-blue); font-weight: bold; font-family: 'Segoe UI', sans-serif;}
+    .info-table td:not([lang="en"]) { text-align: right; direction: rtl; }
+    .translated-def { display: block; margin-top: 8px; color: var(--neon-pink); font-size: 0.95rem; font-weight: bold; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 8px; text-shadow: 0 0 2px rgba(0,0,0,0.5); text-align: right; direction: rtl;}
+
+    /* Progress bar */
+    .progress { margin-top: 8px; height: 8px; background: #222; border-radius: 6px; overflow: hidden; margin-bottom: 15px;}
+    .progress > span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--neon-green), var(--neon-blue)); transition: width .2s; }
+
+    /* =========================================
+       ✨ MODERN LANGUAGE NOTES STYLING ✨
+       ========================================= */
+    .note-card { 
+        background: rgba(22, 27, 34, 0.6);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        border-top: 4px solid var(--neon-blue);
+        padding: 25px; 
+        margin-bottom: 30px; 
+        border-radius: 16px; 
+        box-shadow: 0 10px 20px rgba(0,0,0,0.4); 
+        transition: transform 0.3s, box-shadow 0.3s;
+        backdrop-filter: blur(5px);
+    }
+    .note-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 255, 255, 0.15);
+        border-color: var(--neon-blue);
+    }
+    .note-card h3 { 
+        color: var(--neon-blue); 
+        margin-top: 0;
+        margin-bottom: 20px; 
+        font-size: 1.8rem; 
+        border-bottom: 2px dashed rgba(0, 255, 255, 0.2); 
+        padding-bottom: 10px;
+        text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        text-align: left !important;
+        direction: ltr;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .note-term-block {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        border-left: 3px solid var(--neon-pink);
+    }
+    
+    .en-line {
+        direction: ltr;
+        text-align: left !important;
+        margin-bottom: 8px;
+        font-size: 1.2rem;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        color: #f0f6fc;
+    }
+    .en-line b {
+        color: var(--highlight-color);
+        font-size: 1.3rem;
+        letter-spacing: 0.5px;
+    }
+    .ar-line {
+        direction: rtl;
+        text-align: right !important;
+        font-family: 'Cairo', sans-serif;
+        color: #a3b3c6;
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+        border-right: 2px solid var(--neon-pink);
+        padding-right: 10px;
+    }
+    .ex-line {
+        direction: ltr;
+        text-align: left !important;
+        color: var(--neon-green);
+        font-style: italic;
+        font-size: 1.1rem;
+        padding-left: 15px;
+        border-left: 2px dashed rgba(57, 255, 20, 0.4);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin-top: 8px;
+    }
+    
+    .note-quiz {
+        margin-top: 25px;
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        direction: ltr;
+        text-align: left !important;
+    }
+    .note-quiz-q {
+        font-weight: bold;
+        color: var(--text-color);
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        text-align: left !important;
+    }
+    .note-quiz-q span { color: var(--neon-pink); font-size: 1.4rem; margin-right: 5px;}
+    .note-quiz-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .note-quiz-options button {
+        background: #1e293b;
+        color: #e2e8f0;
+        border: 1px solid #475569;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+        font-size: 1.1rem;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        text-transform: capitalize;
+    }
+    .note-quiz-options button:hover {
+        background: var(--neon-blue);
+        color: #000;
+        border-color: var(--neon-blue);
+        box-shadow: 0 0 10px var(--neon-blue);
+    }
+
+    /* Practice UI */
+    .practice-q-card { background: var(--card-bg); border: 2px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: border-color 0.3s;}
+    .practice-q-text { font-size: 1.25rem; font-weight: bold; color: var(--text-color); margin-bottom: 15px; direction: ltr; text-align: left; font-family: 'Segoe UI', sans-serif;}
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .option-btn { background: #1e293b; color: #e2e8f0; border: 1px solid #475569; padding: 12px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; text-align: center; direction: ltr; font-family: 'Segoe UI', sans-serif;}
+    .option-btn:hover { background: #334155; }
+    .option-btn.correct { background: var(--neon-green); color: #000; border-color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
+    .option-btn.wrong { background: var(--neon-pink); color: #fff; border-color: var(--neon-pink); }
+    .option-btn.correct-hint { background: #34d399; color: #000; border-color: #34d399; }
+    .practice-feedback { margin-top: 10px; font-size: 1.1rem; font-weight: bold; display: none; text-align: center; font-family: 'Segoe UI', sans-serif;}
+    .practice-feedback span { display: block; margin-top: 5px; font-family: 'Cairo', sans-serif; direction: rtl; }
+
+    .submit-practice-btn { width: 100%; font-size: 1.3rem; margin-top: 20px; padding: 15px; background: linear-gradient(45deg, var(--neon-pink), #ff00c1); color: white; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0 0 15px var(--neon-pink); font-weight: bold; transition: 0.3s; font-family: 'Segoe UI', sans-serif;}
+    .submit-practice-btn:hover { background: linear-gradient(45deg, #ff00c1, var(--neon-blue)); transform: scale(1.02); }
+    
+    .certificate { background: linear-gradient(135deg, #0d1117, #161b22); border: 4px solid #ffd700; border-radius: 15px; padding: 40px 20px; text-align: center; box-shadow: 0 0 30px rgba(255, 215, 0, 0.4); margin-top: 30px; position: relative; overflow: hidden; animation: fadeIn 1s; }
+    .cert-title { font-size: 2.5rem; color: #ffd700; margin-bottom: 10px; font-weight: 900; text-shadow: 0 0 10px #ffd700;}
+    .cert-name { font-size: 2.2rem; color: var(--neon-blue); font-weight: bold; margin: 15px 0; border-bottom: 2px dashed var(--neon-blue); display: inline-block; padding: 5px 30px; text-shadow: 0 0 8px var(--neon-blue);}
+    .cert-score { font-size: 1.6rem; color: #fff; margin-bottom: 15px; font-weight: bold;}
+    .cert-message { font-size: 1.4rem; color: var(--neon-green); margin-bottom: 15px; text-shadow: 0 0 5px var(--neon-green);}
+    .trophy-icon { font-size: 4.5rem; margin: 15px 0; text-shadow: 0 0 20px #ffd700;}
+
+    @media (max-width: 600px) { .welcome-modal-content { padding: 20px 15px; width: 95%; } .options-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div id="welcome-modal-overlay">
+      <div class="welcome-modal-content">
+          <h2 class="neon-subtitle">Mr. Moheb Mousa</h2>
+          <p class="welcome-message">Hello Plus 3 Prep - Term 2 - Unit 8 L 3,5&6 </p>
+          <div id="modal-form-container">
+            <form id="user-info-form" onsubmit="return false;">
+              <input type="text" id="userName" placeholder="الاسم ثلاثي" required />
+              <input type="text" id="userGroup" placeholder="المجموعة (مثال: ثالثة اعدادي)" required />
+              <input type="date" id="userDate" required />
+            </form>
+            <button id="start-learning-btn">ابدأ التعلم</button>
+            <p id="modal-error-msg">الرجاء إدخال الاسم والمجموعة أولاً.</p>
+          </div>
+          <div class="contact-info">
+              <p>اتصل الآن 📞</p>
+              <a href="tel:01200621226">01200621226</a>
+              <a href="tel:01145540015">01145540015</a>
+          </div>
+      </div>
+  </div>
+
+  <button id="stop-reading-btn" title="إيقاف القراءة">✋️</button>
+
+  <div id="pronunciation-counter">
+    <span style="color: var(--neon-green); font-weight: bold;">صحيح: <span id="correct-count">0</span> ✅</span>
+    <span style="color: var(--neon-pink); font-weight: bold;">خاطئ: <span id="incorrect-count">0</span> ❌</span>
+    <span style="color: var(--neon-blue); font-weight: bold; border-top: 1px dashed var(--neon-blue); padding-top: 3px; margin-top: 3px;">الإجمالي: <span id="total-words-count">0</span> 📚</span>
+  </div>
+
+  <header>
+    <h1 class="header-title">Hello Plus 3 Prep - Unit 8 L 3,5&6  (Term 2)</h1>
+  </header>
+
+  <div class="controls">
+    <div class="control-group" style="grid-column: 1 / -1;">
+        <input type="text" id="searchInput" placeholder="...🔍 ابحث عن كلمة بالإنجليزية هنا" />
+    </div>
+    <button id="readAllBtn">قراءة محتوى التبويب المفتوح</button>
+    <button id="memoriesBtn">Memories</button>
+    <button id="quickReviewBtn">مراجعة سريعة</button>
+    <button id="reviewDiffBtn" style="background: var(--highlight-color); color: var(--dark-bg); box-shadow: 0 0 5px var(--highlight-color);">مراجعة الكلمات الصعبة ⭐</button>
+    <div class="control-group">
+      <label for="speedSlider" id="speedValue">سرعة القراءة: 1.0x</label>
+      <input type="range" id="speedSlider" min="0.5" max="2.0" step="0.1" value="1.0" />
+    </div>
+    <div class="control-group">
+      <label for="spellingSpeedSlider" id="spellingSpeedValue">سرعة التهجئة: 0.4x</label>
+      <input type="range" id="spellingSpeedSlider" min="0.1" max="1.0" step="0.1" value="0.4" />
+    </div>
+    <button id="modeToggleBtn">الوضع الليلي / النهاري</button>
+    <button id="repeatToggleBtn" data-repeats="1">تكرار: 1 مرة</button>
+  </div>
+
+  <div class="progress" aria-label="تقدم تحميل الصور"><span id="progressBar"></span></div>
+
+  <div class="tabs">
+      <button class="tab-btn active" onclick="openTab('tab-all')">All Words</button>
+      <button class="tab-btn" onclick="openTab('tab-key')">Key Vocabulary</button>
+      <button class="tab-btn" onclick="openTab('tab-lesson3')">Lesson 3</button>
+      <button class="tab-btn" onclick="openTab('tab-lesson45')">Lessons 4 & 5</button>
+      <button class="tab-btn" onclick="openTab('tab-tables')">Important Tables</button>
+      <button class="tab-btn" onclick="openTab('tab-notes')">Language Notes</button>
+      <button class="tab-btn" onclick="openTab('tab-practice')" style="border-color: var(--neon-pink); color: var(--neon-pink); box-shadow: 0 0 10px rgba(255,0,193,0.3);">Let's Practice 🎯</button>
+  </div>
+
+  <main id="main-content">
+      
+      <div id="tab-all" class="tab-content active"><h2 class="section-title">All Words</h2><div class="card-grid" id="grid-all"></div></div>
+      <div id="tab-key" class="tab-content"><h2 class="section-title">Key Vocabulary</h2><div class="card-grid" id="grid-key"></div></div>
+      <div id="tab-lesson3" class="tab-content"><h2 class="section-title">Lesson 3</h2><div class="card-grid" id="grid-lesson3"></div></div>
+      <div id="tab-lesson45" class="tab-content"><h2 class="section-title">Lessons 4 & 5</h2><div class="card-grid" id="grid-lesson45"></div></div>
+
+      <div id="tab-tables" class="tab-content">
+          <h2 class="section-title">Definitions</h2>
+          <button class="read-table-btn" data-section="definitions-table" style="margin-bottom: 10px;">Read Table</button>
+          <table class="info-table" id="definitions-table"><thead><tr><th style="text-align: left;">Word</th><th style="text-align: right;">Arabic Meaning</th><th style="text-align: left;">Definition</th></tr></thead><tbody></tbody></table>
+
+          <h2 class="section-title">Verbs Conjugation</h2>
+          <button class="read-table-btn" data-section="verbs-table" style="margin-bottom: 10px;">Read Table</button>
+          <table class="info-table" id="verbs-table"><thead><tr><th style="text-align: right;">Arabic</th><th style="text-align: left;">Present</th><th style="text-align: left;">Past</th><th style="text-align: left;">P.P</th></tr></thead><tbody></tbody></table>
+
+          <h2 class="section-title">Synonyms & Antonyms</h2>
+          <button class="read-table-btn" data-section="syn-table" style="margin-bottom: 10px;">Read Table</button>
+          <table class="info-table" id="syn-table"><thead><tr><th style="text-align: left;">Word</th><th style="text-align: left;">Synonym</th><th style="text-align: left;">Antonym</th></tr></thead><tbody></tbody></table>
+
+          <h2 class="section-title">Expressions & Prepositions</h2>
+          <button class="read-table-btn" data-section="expressions-table" style="margin-bottom: 10px;">Read Table</button>
+          <table class="info-table" id="expressions-table"><thead><tr><th style="text-align: left;">Expression / Preposition</th><th style="text-align: right;">Arabic Meaning</th></tr></thead><tbody></tbody></table>
+          
+          <h2 class="section-title">Prefixes & Suffixes</h2>
+          <button class="read-table-btn" data-section="affixes-table" style="margin-bottom: 10px;">Read Table</button>
+          <table class="info-table" id="affixes-table"><thead><tr><th style="text-align: left;">Prefix/Suffix</th><th style="text-align: right;">Function</th><th style="text-align: left;">Example</th></tr></thead><tbody></tbody></table>
+      </div>
+
+      <div id="tab-notes" class="tab-content">
+          <h2 class="section-title">Language Notes</h2>
+          <div id="notes-container"></div>
+      </div>
+
+      <div id="tab-practice" class="tab-content">
+          <h2 class="section-title" style="text-align: center; font-size: 2rem; color: var(--neon-pink); direction: ltr;">Let's Practice! 🎯</h2>
+          <div id="practice-container"></div>
+      </div>
+
+  </main>
+
+<script>
+  // ======================= DATA =======================
+  const vocabulary = [
+    // Lesson 3 - Key
+    { en: "skills", ar: "مَهَارَات", type: "key" },
+    { en: "development", ar: "تَطَوُّر", type: "key" },
+    { en: "supersonic", ar: "يَفُوقُ سُرْعَةَ الصَّوْت", type: "key" },
+    { en: "passengers", ar: "رُكَّاب", type: "key" },
+    { en: "loads", ar: "الكَثِيرُ مِن", type: "key" },
+    { en: "wages", ar: "أُجُور", type: "key" },
+    { en: "confusing", ar: "مُرْبِك / مُحَيِّر", type: "key" },
+    { en: "convince", ar: "يُقْنِع", type: "key" },
+    { en: "tunnels", ar: "أَنْفَاق", type: "key" },
+    { en: "air pollution", ar: "تَلَوُّثُ الهَوَاءِ", type: "key" },
+    { en: "decrease", ar: "يُقَلِّل / يَخْفِض", type: "key" },
+    { en: "hyperloop train", ar: "قِطَارٌ فَائِقُ السُّرْعَة", type: "key" },
+    { en: "typical", ar: "نَمَطِيّ / نَمُوذَجِيّ", type: "key" },
+    // Lessons 4 & 5 - Key
+    { en: "computer safety", ar: "أَمَانُ الحَاسُوب", type: "key" },
+    { en: "wide area networks", ar: "شَبَكَاتٌ وَاسِعَةُ النِّطَاق", type: "key" },
+    { en: "viruses", ar: "فَيْرُوسَات", type: "key" },
+    { en: "local area networks", ar: "شَبَكَاتٌ مَحَلِّيَّةُ النِّطَاق", type: "key" },
+    { en: "hackers", ar: "مُخْتَرِقُو الأَجْهِزَةِ الرَّقْمِيَّة", type: "key" },
+    { en: "internet connection", ar: "اتِّصَالٌ بِشَبَكَةِ الإِنْتَرْنِت", type: "key" },
+    { en: "traditions", ar: "تَقَالِيد", type: "key" },
+    { en: "computer networks", ar: "شَبَكَاتُ الحَاسُوب", type: "key" },
+    { en: "software", ar: "بَرْمَجِيَّات", type: "key" },
+    // Lesson 3 - Extra
+    { en: "average speed", ar: "مُتَوَسِّطُ السُّرْعَة", type: "lesson3" },
+    { en: "experts", ar: "خُبَرَاء", type: "lesson3" },
+    { en: "previous", ar: "سَابِق", type: "lesson3" },
+    { en: "high-speed", ar: "عَالِي السُّرْعَة", type: "lesson3" },
+    { en: "require", ar: "يَتَطَلَّب / يَسْتَلْزِم", type: "lesson3" },
+    { en: "rail system", ar: "نِظَامُ السِّكَّةِ الحَدِيدِيَّة", type: "lesson3" },
+    { en: "service", ar: "خِدْمَة", type: "lesson3" },
+    { en: "amounts", ar: "كَمِّيَّات", type: "lesson3" },
+    { en: "sales", ar: "مَبِيعَات", type: "lesson3" },
+    { en: "currently", ar: "حَالِيًّا", type: "lesson3" },
+    { en: "serious", ar: "جَادّ / خَطِير", type: "lesson3" },
+    { en: "issues", ar: "قَضَايَا", type: "lesson3" },
+    { en: "avocado", ar: "نَبَاتُ الأَفُوكَادُو", type: "lesson3" },
+    { en: "original", ar: "أَصْلِيّ", type: "lesson3" },
+    // Lessons 4 & 5 - Extra
+    { en: "connected", ar: "مُتَّصِل", type: "lesson45" },
+    { en: "streaming movies", ar: "أَفْلَامُ بَثٍّ مُبَاشِر", type: "lesson45" },
+    { en: "cash machine", ar: "مَاكِينَةُ صَرَّافٍ آلِيّ", type: "lesson45" },
+    { en: "equipment", ar: "مُعِدَّات", type: "lesson45" },
+    { en: "spread", ar: "يَنْتَشِر", type: "lesson45" },
+    { en: "recognize", ar: "يَتَعَرَّفُ عَلَى", type: "lesson45" },
+    { en: "hunt", ar: "يَصْطَادُ", type: "lesson45" },
+    { en: "national park", ar: "مَحْمِيَّةٌ طَبِيعِيَّة", type: "lesson45" },
+    { en: "snowmobile", ar: "دَرَّاجَةٌ جَلِيدِيَّة", type: "lesson45" },
+    { en: "jewelry", ar: "مُجَوْهَرَات", type: "lesson45" },
+    { en: "diseases", ar: "أَمْرَاض", type: "lesson45" },
+    { en: "encourage", ar: "يُشَجِّع", type: "lesson45" },
+    { en: "reindeer", ar: "حَيَوَانُ الرَّنَّة", type: "lesson45" },
+    { en: "tourism", ar: "سِيَاحَة", type: "lesson45" },
+    { en: "effect", ar: "تَأْثِير", type: "lesson45" },
+    { en: "arguments", ar: "مُنَاقَشَاتٌ جِدَالِيَّة", type: "lesson45" },
+    { en: "wisely", ar: "بِحِكْمَة", type: "lesson45" },
+    { en: "climate change", ar: "التَّغَيُّرُ المُنَاخِيّ", type: "lesson45" },
+    { en: "European", ar: "أُورُوبِّيّ", type: "lesson45" },
+    { en: "diet", ar: "نِظَامٌ غِذَائِيّ", type: "lesson45" },
+    { en: "superfoods", ar: "أَطْعِمَةٌ غَنِيَّةٌ بِالعَنَاصِرِ الغِذَائِيَّة", type: "lesson45" }
+  ];
+
+  const definitions = [
+    { word: "globalization", ar: "عَوْلَمَة", definition: "different countries becoming more similar due to growing world trade, easier travel, and faster communication", defAr: "أصبحت البلدان المختلفة أكثر تشابهاً بسبب نمو التجارة العالمية، وسهولة السفر، والتواصل الأسرع" },
+    { word: "air pollution", ar: "تَلَوُّثُ الهَوَاءِ", definition: "air that is dirty and dangerous for us to breathe", defAr: "هواء قذر وخطير علينا تنفسه" },
+    { word: "decrease", ar: "يَنْخَفِض", definition: "to become less", defAr: "أن يصبح أقل" },
+    { word: "fuel", ar: "وَقُود", definition: "something that is used to create heat or power, usually by burning it", defAr: "شيء يستخدم لتوليد الحرارة أو الطاقة، عادة عن طريق حرقه" },
+    { word: "supersonic", ar: "يَفُوقُ سُرْعَةَ الصَّوْت", definition: "faster than the speed of sound", defAr: "أسرع من سرعة الصوت" },
+    { word: "Wide Area Networks (WAN)", ar: "شَبَكَاتٌ وَاسِعَةُ النِّطَاق", definition: "connect many computers in different buildings or cities", defAr: "تربط العديد من أجهزة الكمبيوتر في مبانٍ أو مدن مختلفة" },
+    { word: "Local Area Networks (LAN)", ar: "شَبَكَاتٌ مَحَلِّيَّةُ النِّطَاق", definition: "connect computers which are usually in the same building, e.g. a school", defAr: "تربط أجهزة الكمبيوتر الموجودة عادة في نفس المبنى، مثل المدرسة" },
+    { word: "The Internet", ar: "شَبَكَةُ الإِنْتَرْنِت", definition: "connects computers all around the world", defAr: "تربط أجهزة الكمبيوتر في جميع أنحاء العالم" },
+    { word: "Computer networks", ar: "شَبَكَاتُ الحَاسِبِ الآلِيّ", definition: "connect two or more computers to share information", defAr: "تربط جهازين كمبيوتر أو أكثر لمشاركة المعلومات" }
+  ];
+  
+  const verbsList = [
+    { ar: "يَطِير", present: "fly", past: "flew", pp: "flown" },
+    { ar: "يُحْضِر", present: "bring", past: "brought", pp: "brought" },
+    { ar: "يَتَكَلَّف / يُكَلِّف", present: "cost", past: "cost", pp: "cost" }
+  ];
+
+  const synAnt = [
+    { word: "decrease (يَنْخَفِض)", syn: "reduce / drop / decline", ant: "increase (يَزْدَاد)" },
+    { word: "advantages (مَزَايَا)", syn: "benefits / pros", ant: "disadvantages (عُيُوب)" },
+    { word: "supersonic (عَالِي السُّرْعَة)", syn: "fast / high-speed", ant: "slow / low-speed (بَطِيء)" },
+    { word: "well-known (مَعْرُوف)", syn: "famous / popular", ant: "unknown (مَجْهُول)" },
+    { word: "incredible (مُدْهِش)", syn: "amazing / unbelievable", ant: "believable / ordinary (يُصَدَّق / عَادِيّ)" },
+    { word: "wide (وَاسِع)", syn: "broad / large", ant: "narrow (ضَيِّق)" },
+    { word: "connected (مُتَّصِل)", syn: "linked / joined", ant: "disconnected (غَيْرُ مُتَّصِل)" },
+    { word: "main (رَئِيسِيّ)", syn: "chief / central", ant: "secondary (ثَانَوِيّ)" },
+    { word: "damage (ضَرَر)", syn: "harm / destruction", ant: "repair / protection (إِصْلَاح / حِمَايَة)" }
+  ];
+
+  const expressions = [
+    { en: "earn money", ar: "يَكْسِبُ نُقُودًا" },
+    { en: "develop even faster", ar: "تَتَطَوَّرُ أَسْرَع" },
+    { en: "kilometer per hour (kph)", ar: "كِيلُومِتْر فِي السَّاعَة" },
+    { en: "well known for", ar: "مَشْهُورٌ بِـ" },
+    { en: "at the speed of...", ar: "بِسُرْعَةِ..." },
+    { en: "variety of...", ar: "تَنَوُّع / مَجْمُوعَةٌ مِن..." },
+    { en: "bring back", ar: "يَسْتَعِيد" },
+    { en: "by the 1950s", ar: "بِحُلُولِ الخَمْسِينِيَّات" },
+    { en: "on the one hand", ar: "عَلَى جَانِب (الرأي الأول)" },
+    { en: "on the other hand", ar: "عَلَى جَانِبٍ آخَر (الرأي المخالف)" },
+    { en: "responsible for loads of", ar: "مَسْؤُولٌ عَنِ الكَثِيرِ مِن" },
+    { en: "in the early days", ar: "فِي العُصُورِ القَدِيمَة" },
+    { en: "That's not exactly fair.", ar: "هَذَا لَيْسَ عَدْلًا." },
+    { en: "That doesn't sound bad.", ar: "لَيْسَ يَبْدُو شَيْئًا سَيِّئًا." },
+    { en: "the biggest global network", ar: "أَكْبَرُ شَبَكَةِ اتِّصَالٍ فِي العَالَم" },
+    { en: "more than ever before", ar: "أَكْثَرُ مِنْ ذِي قَبْل" },
+    { en: "stay safe", ar: "يَظَلُّ فِي أَمَان" },
+    { en: "connect a small area", ar: "يُغَطِّي مِنْطَقَةً صَغِيرَة" },
+    { en: "such as", ar: "مِثْل" },
+    { en: "across a small area", ar: "عَبْرَ مِنْطَقَةٍ صَغِيرَة" },
+    { en: "in brief", ar: "بِاخْتِصَار" },
+    { en: "in addition", ar: "بِالإِضَافَةِ إِلَى" },
+    { en: "in conclusion", ar: "خِتَامًا" },
+    { en: "hunt for food", ar: "يَصْطَادُ مِنْ أَجْلِ الطَّعَام" },
+    { en: "cut down", ar: "يَقْطَع" },
+    { en: "the beginning of...", ar: "بِدَايَةُ..." },
+    { en: "get rubber from", ar: "يَحْصُلُ عَلَى المَطَّاطِ مِن" }
+  ];
+
+  const affixes = [
+    { affix: "un-", func: "تُعْطِي عَكْسَ الصِّفَةِ", ex: "uncomfortable (غَيْرُ مُرِيح)" },
+    { affix: "-ese", func: "تُعْطِي الجِنْسِيَّةَ مِنْ اسْمِ الدَّوْلَةِ", ex: "Japanese (يَابَانِيُّ الجِنْسِيَّة)" },
+    { affix: "-ful", func: "تُكَوِّنُ الصِّفَةَ مِنَ الِاسْمِ", ex: "powerful (قَوِيّ / ذُو نُفُوذ)" },
+    { affix: "im-", func: "تُكَوِّنُ عَكْسَ الصِّفَةِ", ex: "impossible (مُسْتَحِيل)" },
+    { affix: "-ing", func: "تُكَوِّنُ الِاسْمَ", ex: "messaging (إِرْسَال)" },
+    { affix: "-ment", func: "تُكَوِّنُ الِاسْمَ مِنَ الفِعْلِ", ex: "equipment (أَدَوَات / مُعِدَّات)" },
+    { affix: "-er", func: "تُكَوِّنُ الِاسْمَ مِنَ الفِعْلِ", ex: "hacker (مُخْتَرِقُ أَجْهِزَةٍ رَقْمِيَّة)" }
+  ];
+
+  const languageNotes = [
+    {
+        title: "✨ flight vs. tour vs. trip vs. journey vs. voyage",
+        content: `
+            <div class="note-term-block">
+                <div class="en-line"><b>flight:</b> A journey in an aircraft.</div>
+                <div class="ar-line">(رِحْلَةٌ جَوِّيَّةٌ)</div>
+                <div class="ex-line">Ex: My flight is at 6 p.m.</div>
+            </div>
+            <div class="note-term-block">
+                <div class="en-line"><b>tour:</b> A journey for pleasure in which several different places are visited.</div>
+                <div class="ar-line">(جَوْلَةٌ سِيَاحِيَّةٌ زِيَارَةُ عِدَّةِ أَمَاكِنَ عَادَةً مَعَ مُرْشِدٍ)</div>
+                <div class="ex-line">Ex: We took a tour at the museum.</div>
+            </div>
+            <div class="note-term-block">
+                <div class="en-line"><b>trip:</b> A journey in which you go somewhere, usually for a short time, and come back again.</div>
+                <div class="ar-line">(رِحْلَةٌ عَامَّةٌ قَصِيرَةٌ)</div>
+                <div class="ex-line">Ex: We went on a trip to Alexandria.</div>
+            </div>
+            <div class="note-term-block">
+                <div class="en-line"><b>journey:</b> The act of traveling from one place to another, especially in a vehicle.</div>
+                <div class="ar-line">(رِحْلَةٌ طَوِيلَةٌ تُرَكِّزُ عَلَى المَسَافَةِ)</div>
+                <div class="ex-line">Ex: The journey was long and tiring.</div>
+            </div>
+            <div class="note-term-block">
+                <div class="en-line"><b>voyage:</b> A long journey, especially by ship.</div>
+                <div class="ar-line">(رِحْلَةٌ بَحْرِيَّةٌ طَوِيلَةٌ)</div>
+                <div class="ex-line">Ex: The ship began a long voyage across the sea.</div>
+            </div>
+            <div class="note-quiz">
+                <div class="note-quiz-q"><span>Q:</span> Our ........ by ship was amazing.</div>
+                <div class="note-quiz-options">
+                    <button data-correct="false" onclick="checkNoteQuiz(this)">flight</button>
+                    <button data-correct="true" onclick="checkNoteQuiz(this)">voyage</button>
+                    <button data-correct="false" onclick="checkNoteQuiz(this)">tower</button>
+                </div>
+            </div>
+        `
+    },
+    {
+        title: "✨ hunt vs. fish",
+        content: `
+            <div class="note-term-block">
+                <div class="en-line"><b>hunt:</b> To chase and try to catch and kill an animal or bird for food, sport, or profit.</div>
+                <div class="ar-line">(يَصْطَادُ حَيَوَانَاتٍ)</div>
+                <div class="ex-line">Ex: People hunt deer in the forest.</div>
+            </div>
+            <div class="note-term-block">
+                <div class="en-line"><b>fish:</b> To try to catch fish.</div>
+                <div class="ar-line">(يَصْطَادُ أَسْمَاكًا)</div>
+                <div class="ex-line">Ex: They fish in the river at the weekend.</div>
+            </div>
+            <div class="note-quiz">
+                <div class="note-quiz-q"><span>Q:</span> They will go to the river to ........</div>
+                <div class="note-quiz-options">
+                    <button data-correct="false" onclick="checkNoteQuiz(this)">hunt</button>
+                    <button data-correct="true" onclick="checkNoteQuiz(this)">fish</button>
+                </div>
+            </div>
+        `
+    },
+    {
+        title: "✨ hackers vs. scammers",
+        content: `
+            <div class="note-term-block">
+                <div class="en-line"><b>hackers:</b> People who secretly find a way of looking at and/or changing information on somebody else's computer system without permission.</div>
+                <div class="ar-line">(مُخْتَرِقُو الأَجْهِزَةِ الرَّقْمِيَّةِ)</div>
+                <div class="ex-line">Ex: Hackers tried to break into the school network.</div>
+            </div>
+            <div class="note-term-block">
+                <div class="en-line"><b>scammers:</b> People who make money by tricking someone.</div>
+                <div class="ar-line">(مُحْتَالٌ يَخْدَعُ الأَشْخَاصَ لِلحُصُولِ عَلَى المَالِ)</div>
+                <div class="ex-line">Ex: Scammers sent him a fake email to steal his password.</div>
+            </div>
+            <div class="note-quiz">
+                <div class="note-quiz-q"><span>Q:</span> You should install antivirus software to protect your computer from ........</div>
+                <div class="note-quiz-options">
+                    <button data-correct="true" onclick="checkNoteQuiz(this)">hackers</button>
+                    <button data-correct="false" onclick="checkNoteQuiz(this)">scammers</button>
+                </div>
+            </div>
+        `
+    }
+  ];
+  
+  const practiceQuestions = [
+    { q: "The prefix '...' gives the opposite of the word 'comfortable'.", options: ["im-", "dis-", "un-", "il-"], answer: "un-", exp: "المقطع un- يعطي عكس الصفة comfortable لتصبح uncomfortable (غير مريح)." },
+    { q: "The word 'incredible' is the ... of 'believable'.", options: ["adverb", "synonym", "prefix", "antonym"], answer: "antonym", exp: "كلمة incredible (لا يصدق) هي عكس (antonym) كلمة believable (يمكن تصديقه)." },
+    { q: "Our ... by ship was amazing.", options: ["flight", "voyage", "tower", "shop"], answer: "voyage", exp: "كلمة voyage تعني رحلة بحرية (by ship)." },
+    { q: "He is responsible ... the team's food.", options: ["to", "of", "for", "in"], answer: "for", exp: "حرف الجر المناسب مع كلمة responsible هو for (مسؤول عن)." },
+    { q: "He earns his ... in the factory at the end of the week.", options: ["point", "mark", "grade", "wage"], answer: "wage", exp: "كلمة wage تعني (أجر) وهو ما يتقاضاه العامل في المصنع." },
+    { q: "People are worried because of air ... in big cities.", options: ["solution", "pollution", "celebration", "invitation"], answer: "pollution", exp: "المصطلح air pollution يعني تلوث الهواء وهو مشكلة في المدن الكبرى." },
+    { q: "A/An ... is a passage built underground or through a mountain.", options: ["monument", "tunnel", "apartment", "station"], answer: "tunnel", exp: "النفق (tunnel) هو ممر يُبنى تحت الأرض أو عبر الجبل." },
+    { q: "One big ... of online learning is that you can study anytime.", options: ["disadvantage", "advantage", "costume", "sale"], answer: "advantage", exp: "القدرة على الدراسة في أي وقت هي ميزة (advantage)." },
+    { q: "A ... jet can fly faster than the speed of sound.", options: ["confusing", "local", "supersonic", "crowded"], answer: "supersonic", exp: "الطائرة (supersonic) هي التي تطير بسرعة تفوق سرعة الصوت." },
+    { q: "... makes it easier to buy foreign products and work with other countries.", options: ["Exercise", "Globalization", "Fear", "Worry"], answer: "Globalization", exp: "العولمة (Globalization) تسهل التجارة مع الدول الأخرى." },
+    { q: "... is used to create heat or power, usually by burning.", options: ["Flight", "Fuel", "Rail", "Pollution"], answer: "Fuel", exp: "الوقود (Fuel) يستخدم لتوليد الحرارة أو الطاقة عن طريق الحرق." },
+    { q: "One of the disadvantages of planes is that they ... a huge amount of fuel.", options: ["fix", "help", "prevent", "require"], answer: "require", exp: "الطائرات (تتطلب / require) كمية هائلة من الوقود." },
+    { q: "Some factories produce large ... of waste every day.", options: ["amounts", "lists", "units", "rows"], answer: "amounts", exp: "تنتج المصانع (كميات / amounts) كبيرة من المخلفات." },
+    { q: "The ... trains will be faster than today's trains.", options: ["space", "hyperloop", "fast", "traditional"], answer: "hyperloop", exp: "قطارات (hyperloop) هي تقنية قطارات فائقة السرعة في المستقبل." },
+    { q: "The bus driver asked all ... to sit down before moving.", options: ["passengers", "players", "painters", "visitors"], answer: "passengers", exp: "سائق الحافلة يطلب من (الركاب / passengers) الجلوس." },
+    { q: "This map is ... because it has too many streets.", options: ["serious", "cheap", "confusing", "old"], answer: "confusing", exp: "الخريطة التي بها شوارع كثيرة جداً تكون (مربكة / confusing)." },
+    { q: "Listening ... is important for effective communication.", options: ["advantage", "skill", "cause", "problem"], answer: "skill", exp: "(مهارة / skill) الاستماع مهمة للتواصل الفعال." },
+    { q: "The ... said we should reduce fuel use to protect the environment.", options: ["students", "customers", "experts", "neighbors"], answer: "experts", exp: "(الخبراء / experts) هم من ينصحون بتقليل استخدام الوقود لحماية البيئة." },
+    { q: "... means faster than the speed of sound.", options: ["Slow", "Supersonic", "Financial", "Environmental"], answer: "Supersonic", exp: "كلمة Supersonic تعني ما يفوق سرعة الصوت." },
+    { q: "The words 'narrow' and 'wide' are ...", options: ["synonyms", "antonyms", "adverbs", "nouns"], answer: "antonyms", exp: "كلمة narrow (ضيق) و wide (واسع) هما متضادان (antonyms)." },
+    { q: "The suffix '...' forms the noun from 'hack'.", options: ["-ed", "-ness", "-ily", "-er"], answer: "-er", exp: "بإضافة المقطع er- للفعل hack نحصل على الاسم hacker (مخترق)." },
+    { q: "To get the noun from 'equip', we add the suffix '...'", options: ["-ation", "-ness", "-ment", "-ly"], answer: "-ment", exp: "بإضافة المقطع ment- للفعل equip نحصل على الاسم equipment (معدات)." },
+    { q: "The word 'harm' is the ... of 'damage'.", options: ["adverb", "antonym", "adjective", "synonym"], answer: "synonym", exp: "كلمة harm (يؤذي/ضرر) هي مرادف (synonym) لكلمة damage." },
+    { q: "They will go to the river to ...", options: ["hunt", "fish", "study", "read"], answer: "fish", exp: "نحن نذهب إلى النهر لـ (نصطاد السمك / fish)." },
+    { q: "Please, explain your point of view ... brief.", options: ["about", "at", "on", "in"], answer: "in", exp: "المصطلح in brief يعني (باختصار)." },
+    { q: "Animals always hunt ... food.", options: ["to", "in", "of", "for"], answer: "for", exp: "الحيوانات تصطاد (من أجل / for) الطعام." },
+    { q: "You should install antivirus software to protect your computer from ...", options: ["traditions", "hackers", "networks", "connection"], answer: "hackers", exp: "برامج الحماية تحمي الحاسوب من المخترقين (hackers) أو الفيروسات." },
+    { q: "Students use the ... to search for information online.", options: ["wires", "viruses", "cash machines", "internet"], answer: "internet", exp: "الطلاب يستخدمون (الإنترنت / internet) للبحث عن المعلومات." },
+    { q: "A computer ... allows computers to share information with each other.", options: ["network", "tradition", "screen", "files"], answer: "network", exp: "شبكة الحاسوب (network) تسمح بمشاركة المعلومات بين الأجهزة." },
+    { q: "Social media helps news ... very fast.", options: ["stop", "limit", "spread", "control"], answer: "spread", exp: "وسائل التواصل الاجتماعي تساعد الأخبار على (الانتشار / spread) بسرعة." },
+    { q: "Nowadays, technology ... our world more than ever before.", options: ["stays", "prevents", "separates", "connects"], answer: "connects", exp: "التكنولوجيا (تربط / connects) عالمنا أكثر من ذي قبل." },
+    { q: "Local people have fought to ... their environment and culture.", options: ["protect", "hurt", "lose", "damage"], answer: "protect", exp: "السكان المحليون يحاربون من أجل (حماية / protect) بيئتهم وثقافتهم." },
+    { q: "Many people believe that ... is a problem for local businesses.", options: ["civilization", "capitalization", "globalization", "organization"], answer: "globalization", exp: "الكثيرون يعتقدون أن (العولمة / globalization) تمثل مشكلة للشركات المحلية." },
+    { q: "A computer can stop working if it gets ...", options: ["internet", "electricity", "viruses", "network"], answer: "viruses", exp: "الحاسوب قد يتوقف عن العمل إذا أصيب بـ (الفيروسات / viruses)." },
+    { q: "Doctors work hard to prevent the spread of serious ...", options: ["ideas", "diseases", "habits", "skills"], answer: "diseases", exp: "الأطباء يعملون بجد لمنع انتشار (الأمراض / diseases) الخطيرة." },
+    { q: "... causes higher temperatures and unusual weather around the world.", options: ["Air travel", "Water cycle", "Climate change", "Solar power"], answer: "Climate change", exp: "(التغير المناخي / Climate change) هو سبب ارتفاع درجات الحرارة والطقس غير المعتاد." },
+    { q: "A ... is often used to travel quickly over snow in very cold areas.", options: ["bicycle", "submarine", "helicopter", "snowmobile"], answer: "snowmobile", exp: "(الدراجة الجليدية / snowmobile) تستخدم للسفر السريع على الثلج." },
+    { q: "He gave a strong ... to support his opinion.", options: ["culture", "rule", "argument", "ceremony"], answer: "argument", exp: "لقد قدم (حجة / argument) قوية ليدعم رأيه." },
+    { q: "The computer ... is important because of hackers and viruses.", options: ["safety", "virus", "wires", "gym"], answer: "safety", exp: "(أمان / safety) الحاسوب مهم بسبب المخترقين والفيروسات." },
+    { q: "... connect two or more computers to share information.", options: ["Computer networks", "Hackers", "Key words", "Traditions"], answer: "Computer networks", exp: "(شبكات الحاسوب / Computer networks) تربط جهازين أو أكثر لمشاركة المعلومات." },
+    { q: "Globalization helps people from different countries share their ....... easily.", options: ["spaces", "cultures", "planets", "tunnels"], answer: "cultures", exp: "العولمة تساعد الناس من دول مختلفة على مشاركة (ثقافاتهم / cultures)." },
+    { q: "Planting more trees in cities is a great way to reduce air .......", options: ["connection", "software", "pollution", "network"], answer: "pollution", exp: "تعبير متلازم (air pollution) يعني تلوث الهواء، وزراعة الأشجار تقلل منه." },
+    { q: "If we use public transport more, we can ....... the amount of fuel we burn.", options: ["increase", "require", "spread", "decrease"], answer: "decrease", exp: "استخدام النقل العام يساعد في (تقليل / decrease) كمية الوقود المحترق." },
+    { q: "Large jets require a huge amount of ....... to fly across the ocean.", options: ["water", "software", "fuel", "traditions"], answer: "fuel", exp: "الطائرات النفاثة تحتاج لكميات هائلة من (الوقود / fuel) للطيران." },
+    { q: "A ....... plane is designed to travel much faster than the speed of sound.", options: ["slow", "local", "supersonic", "traditional"], answer: "supersonic", exp: "الطائرة (supersonic) مصممة للسفر أسرع من سرعة الصوت." },
+    { q: "The train was crowded with ....... going to their work in the morning.", options: ["hackers", "passengers", "viruses", "tunnels"], answer: "passengers", exp: "القطار كان مزدحماً بـ (الركاب / passengers) الذاهبين لعملهم." },
+    { q: "Engineers build ....... through mountains to make train journeys shorter.", options: ["flights", "skies", "clouds", "tunnels"], answer: "tunnels", exp: "المهندسون يبنون (أنفاقاً / tunnels) عبر الجبال لتقصير مسافة الرحلة." },
+    { q: "In the future, the ....... train will make traveling between cities extremely fast.", options: ["hyperloop", "traditional", "old", "steam"], answer: "hyperloop", exp: "القطار المسمى بـ (hyperloop) سيكون وسيلة نقل فائقة السرعة في المستقبل." },
+    { q: "We are ....... working on a new digital study guide for our students.", options: ["currently", "previous", "old", "late"], answer: "currently", exp: "كلمة (currently) تعني (حالياً) وهي تناسب زمن المضارع المستمر في الجملة." },
+    { q: "Good computer safety is important to protect your personal files from .......", options: ["experts", "relatives", "passengers", "hackers"], answer: "hackers", exp: "أمان الحاسوب مهم لحماية ملفاتك من (المخترقين / hackers)." },
+    { q: "You shouldn't open strange links because they might contain dangerous .......", options: ["benefits", "viruses", "traditions", "tunnels"], answer: "viruses", exp: "الروابط الغريبة قد تحتوي على (فيروسات / viruses) خطيرة تضر جهازك." },
+    { q: "You need a strong internet ....... to stream movies without stopping.", options: ["pollution", "machine", "connection", "snowmobile"], answer: "connection", exp: "تحتاج إلى (اتصال / connection) إنترنت قوي لمشاهدة الأفلام دون انقطاع." },
+    { q: "The school installed new educational ....... to help students learn English better.", options: ["hardware", "fuel", "software", "tunnels"], answer: "software", exp: "المدارس تثبت (برمجيات / software) تعليمية جديدة لمساعدة الطلاب." },
+    { q: "Social media helps news and information ....... very quickly across the world.", options: ["stop", "spread", "decrease", "reduce"], answer: "spread", exp: "وسائل التواصل الاجتماعي تساعد الأخبار على (الانتشار / spread) بسرعة جداً." },
+    { q: "I didn't ....... my old friend at first because he looked very different.", options: ["recognize", "hunt", "earn", "connect"], answer: "recognize", exp: "الفعل (recognize) يعني (يتعرف على)، لم أتعرف عليه لأن شكله اختلف." },
+    { q: "Some people ....... wild animals in national parks, which is illegal.", options: ["spread", "hunt", "fly", "decrease"], answer: "hunt", exp: "بعض الناس (يصطادون / hunt) الحيوانات البرية، وهو أمر غير قانوني." },
+    { q: "Washing your hands frequently helps protect you from serious .......", options: ["wages", "skills", "networks", "diseases"], answer: "diseases", exp: "غسل اليدين باستمرار يحميك من (الأمراض / diseases) الخطيرة." },
+    { q: "....... causes the ice in polar regions to melt and global temperatures to rise.", options: ["Climate change", "Computer safety", "Cash machine", "Local area network"], answer: "Climate change", exp: "(التغير المناخي / Climate change) هو سبب ذوبان الجليد وارتفاع الحرارة." },
+    { q: "He works two jobs because he wants to ....... enough money for his family.", options: ["spend", "cost", "earn", "recognize"], answer: "earn", exp: "التعبير (earn money) يعني (يكسب المال) من خلال العمل." },
+    { q: "Egypt is well known ....... its ancient monuments and beautiful weather.", options: ["in", "to", "for", "at"], answer: "for", exp: "حرف الجر الصحيح مع التعبير well known هو (for)، ويعني (مشهور بـ)." }
+  ];
+
+  function checkNoteQuiz(btn) {
+      const parent = btn.parentElement;
+      const buttons = parent.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true); 
+      
+      if(btn.dataset.correct === 'true') {
+          btn.style.background = 'var(--neon-green)';
+          btn.style.color = '#000';
+          btn.style.borderColor = 'var(--neon-green)';
+          btn.textContent += ' ✅';
+      } else {
+          btn.style.background = 'var(--neon-pink)';
+          btn.style.color = '#fff';
+          btn.style.borderColor = 'var(--neon-pink)';
+          btn.textContent += ' ❌';
+          // Show correct answer
+          buttons.forEach(b => {
+              if(b.dataset.correct === 'true') {
+                  b.style.borderColor = 'var(--neon-green)';
+                  b.style.color = 'var(--neon-green)';
+              }
+          });
+      }
+  }
+
+  // ======================= LOGIC =======================
+  
+  const IMG_CACHE_PREFIX = 'mrmoheb_base64_h3p_u8_';
+  const PIXABAY_API_KEY = '55174889-4beb6fc649c3c3d196c624ce0';
+  let difficultWords = JSON.parse(localStorage.getItem('mrmoheb_diff_h3p_u8') || '[]');
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let correctPronunciations = 0, incorrectPronunciations = 0;
+
+  function toKey(term){ return IMG_CACHE_PREFIX + term.toLowerCase(); }
+  function readCache(term){ try { return localStorage.getItem(toKey(term)); } catch(e){ return null; } }
+  function writeCache(term, dataUrl){ try { localStorage.setItem(toKey(term), dataUrl); } catch(e){} }
+
+  async function searchPixabay(term, isReload = false) {
+    const url = `https://pixabay.com/api/?key=${PIXABAY_API_KEY}&q=${encodeURIComponent(term)}&image_type=photo&orientation=horizontal&safesearch=true&per_page=15`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('API Error');
+    const data = await res.json();
+    if (!data.hits || data.hits.length === 0) throw new Error('No results');
+    let index = isReload ? Math.floor(Math.random() * data.hits.length) : 0;
+    return data.hits[index].webformatURL;
+  }
+
+  async function blobToDataUrl(blob){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(blob);
+    });
+  }
+
+  async function getRealImageBase64(term, forcePixabay = false, isReload = false) {
+    const cached = readCache(term);
+    if (cached && !isReload) return cached; 
+    try {
+        const finalUrl = await searchPixabay(term, isReload);
+        const res = await fetch(finalUrl, { cache: 'no-store' });
+        const blob = await res.blob();
+        const dataUrl = await blobToDataUrl(blob);
+        writeCache(term, dataUrl);
+        return dataUrl;
+    } catch(e) {
+        return `data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150"><rect width="200" height="150" fill="%231f2730"/><text x="50%" y="50%" fill="%2300ffff" font-size="24" font-family="sans-serif" dominant-baseline="middle" text-anchor="middle">${term.substring(0,10)}</text></svg>`;
+    }
+  }
+
+  async function hydrateImagesForAllCards(){
+    const cards = Array.from(document.querySelectorAll('.word-card'));
+    const bar = document.getElementById('progressBar');
+    let done = 0;
+    const updateBar = () => { bar.style.width = `${Math.round((done / Math.max(cards.length,1))*100)}%`; };
+    updateBar();
+    for (const card of cards){
+      const term = card.dataset.en;
+      const imgEl = card.querySelector('img');
+      const status = card.querySelector('.img-status');
+      status.textContent = 'Loading...';
+      try {
+        const dataUrl = await getRealImageBase64(term);
+        imgEl.src = dataUrl;
+        status.textContent = 'Done ✓';
+      } catch(e){ status.textContent = 'Fail ↻'; }
+      done++; updateBar();
+      if(done < cards.length) await new Promise(r=>setTimeout(r, 100));
+    }
+    setTimeout(() => { document.querySelector('.progress').style.display = 'none'; }, 1000);
+  }
+
+  function openTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+      stopReading(); 
+  }
+
+  function playNativeVictorySound() {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return; 
+      const ctx = new AudioContext();
+      const notes = [523.25, 659.25, 783.99, 1046.50]; 
+      const startTime = ctx.currentTime;
+
+      notes.forEach((freq, index) => {
+          const osc = ctx.createOscillator();
+          const gainNode = ctx.createGain();
+          osc.type = 'triangle'; 
+          osc.frequency.setValueAtTime(freq, startTime + (index * 0.15));
+          gainNode.gain.setValueAtTime(0, startTime + (index * 0.15));
+          gainNode.gain.linearRampToValueAtTime(0.3, startTime + (index * 0.15) + 0.05);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + (index * 0.15) + 0.5);
+          osc.connect(gainNode); gainNode.connect(ctx.destination);
+          osc.start(startTime + (index * 0.15)); osc.stop(startTime + (index * 0.15) + 0.5);
+      });
+  }
+
+  function triggerExplosion() {
+      playNativeVictorySound();
+      const colors = ['#ff00c1', '#00ffff', '#39ff14', '#ffff00'];
+      for (let i = 0; i < 60; i++) {
+          createExplosionParticle(colors[Math.floor(Math.random() * colors.length)], 'left');
+          createExplosionParticle(colors[Math.floor(Math.random() * colors.length)], 'right');
+      }
+  }
+
+  function createExplosionParticle(color, side) {
+      const confetti = document.createElement('div');
+      confetti.style.position = 'fixed'; confetti.style.bottom = '-10px';
+      confetti.style.left = side === 'left' ? (Math.random() * 10 + '%') : (90 - Math.random() * 10 + '%');
+      confetti.style.width = Math.random() * 10 + 5 + 'px'; confetti.style.height = Math.random() * 20 + 10 + 'px';
+      confetti.style.backgroundColor = color; confetti.style.zIndex = '999999'; confetti.style.pointerEvents = 'none';
+      document.body.appendChild(confetti);
+      const xMove = side === 'left' ? (Math.random() * 60 + 10) + 'vw' : (-Math.random() * 60 - 10) + 'vw';
+      const yMove = (-Math.random() * 100 - 40) + 'vh';
+      const animation = confetti.animate([
+          { transform: `translate3d(0,0,0) rotate(0deg)`, opacity: 1 },
+          { transform: `translate3d(${xMove}, ${yMove}, 0) rotate(${Math.random()*1080}deg)`, opacity: 0 }
+      ], { duration: Math.random() * 1500 + 1000, easing: 'cubic-bezier(.2,.8,.2,1)' });
+      animation.onfinish = () => confetti.remove();
+  }
+
+  function renderPractice() {
+      const container = document.getElementById('practice-container');
+      container.innerHTML = '';
+      practiceQuestions.forEach((pq, index) => {
+          const card = document.createElement('div');
+          card.className = 'practice-q-card';
+          card.dataset.answered = "false";
+          
+          const qText = document.createElement('div');
+          qText.className = 'practice-q-text';
+          qText.innerHTML = `${index + 1}. ${pq.q}`;
+          
+          const grid = document.createElement('div');
+          grid.className = 'options-grid';
+          
+          const feedback = document.createElement('div');
+          feedback.className = 'practice-feedback';
+
+          pq.options.forEach(opt => {
+              const btn = document.createElement('button');
+              btn.className = 'option-btn';
+              btn.textContent = opt;
+              btn.onclick = () => {
+                  if(card.dataset.answered === "true") return; 
+                  card.dataset.answered = "true";
+                  
+                  if(opt === pq.answer) {
+                      btn.classList.add('correct');
+                      card.dataset.correct = "true";
+                      feedback.innerHTML = `Excellent! 👏<br><span>السبب: ${pq.exp}</span>`;
+                      feedback.style.color = 'var(--neon-green)';
+                      triggerExplosion();
+                  } else {
+                      btn.classList.add('wrong');
+                      card.dataset.correct = "false";
+                      feedback.innerHTML = `Wrong! Correct answer: ${pq.answer}<br><span>السبب: ${pq.exp}</span>`;
+                      feedback.style.color = 'var(--neon-pink)';
+                      Array.from(grid.children).forEach(b => { if(b.textContent === pq.answer) b.classList.add('correct-hint'); });
+                  }
+                  feedback.style.display = 'block';
+              };
+              grid.appendChild(btn);
+          });
+          card.appendChild(qText); card.appendChild(grid); card.appendChild(feedback);
+          container.appendChild(card);
+      });
+
+      const submitBtn = document.createElement('button');
+      submitBtn.textContent = 'Finish Practice & Get Certificate 🏆';
+      submitBtn.className = 'submit-practice-btn';
+      submitBtn.onclick = showPracticeCertificate;
+      container.appendChild(submitBtn);
+
+      const certDiv = document.createElement('div');
+      certDiv.id = 'practice-certificate'; certDiv.style.display = 'none';
+      container.appendChild(certDiv);
+  }
+
+  function showPracticeCertificate() {
+      const cards = document.querySelectorAll('.practice-q-card');
+      let answered = 0, correct = 0;
+      cards.forEach(c => { if(c.dataset.answered === "true") { answered++; if(c.dataset.correct === "true") correct++; } });
+
+      if(answered < practiceQuestions.length) { alert('Sorry! Please answer all questions to get your certificate.'); return; }
+
+      const userName = document.getElementById('userName').value.trim() || 'English Hero';
+      const total = practiceQuestions.length;
+      const percentage = Math.round((correct / total) * 100);
+      let message = '', trophy = '';
+      
+      if (percentage === 100) { message = 'Absolute Champion! Perfect Score! 🌟'; trophy = '🏆🏆🏆'; triggerExplosion(); setTimeout(triggerExplosion, 800); } 
+      else if (percentage >= 80) { message = 'Awesome! Excellent Performance! 👏'; trophy = '🥇'; triggerExplosion(); } 
+      else if (percentage >= 50) { message = 'Good job! You tried hard, but you can do better! 👍'; trophy = '🥈'; } 
+      else { message = 'Not bad! This is just the beginning, review and try again! 💪'; trophy = '🥉'; }
+
+      const certDiv = document.getElementById('practice-certificate');
+      certDiv.innerHTML = `
+          <div class="certificate">
+              <div class="cert-title">Certificate of Achievement</div>
+              <div class="trophy-icon">${trophy}</div>
+              <div style="font-size: 1.2rem; color: #ccc;">Proudly presented to</div>
+              <div class="cert-name">${userName}</div>
+              <div class="cert-score">Score: ${correct} / ${total} (${percentage}%)</div>
+              <div class="cert-message">${message}</div>
+              <div style="font-size: 1rem; color: #888; margin-top: 15px;">Mr. Moheb Mousa - Hello Plus 3 Prep</div>
+          </div>
+      `;
+      certDiv.style.display = 'block';
+      certDiv.scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('.submit-practice-btn').style.display = 'none';
+  }
+
+  let isReading = false, readingQueue = [], currentHighlightElement = null, repeatCount = 1, speechRate = 1.0, spellingRate = 0.4;
+  
+  function toggleDifficult(card, btn) {
+      const en = card.dataset.en;
+      if (difficultWords.includes(en)) {
+          difficultWords = difficultWords.filter(w => w !== en); btn.classList.remove('active-star');
+      } else { difficultWords.push(en); btn.classList.add('active-star'); }
+      localStorage.setItem('mrmoheb_diff_h3p_u8', JSON.stringify(difficultWords));
+  }
+
+  function startVoiceLab(card) {
+      if(!SpeechRec) { alert('Sorry, your browser does not support the microphone feature.'); return; }
+      const targetWord = card.dataset.en.toLowerCase().replace(/[^a-z\s]/g, '').trim();
+      const feedbackEl = card.querySelector('.voice-feedback');
+      feedbackEl.textContent = "Listening... say the word 🎤"; feedbackEl.className = 'voice-feedback';
+
+      const rec = new SpeechRec(); rec.lang = 'en-US';
+      rec.onresult = (e) => {
+          const spoken = e.results[0][0].transcript.toLowerCase().replace(/[^a-z\s]/g, '').trim();
+          if(spoken === targetWord || spoken.includes(targetWord) || targetWord.includes(spoken)) {
+              feedbackEl.textContent = `Perfect! ✅ (${spoken})`; feedbackEl.classList.add('success');
+              triggerExplosion(); correctPronunciations++; document.getElementById('correct-count').textContent = correctPronunciations;
+          } else {
+              feedbackEl.textContent = `Try Again ❌ (Heard: ${spoken})`; feedbackEl.classList.add('error');
+              speak(targetWord, 'en-US', () => {}, 0.85); incorrectPronunciations++; document.getElementById('incorrect-count').textContent = incorrectPronunciations;
+          }
+      };
+      rec.start();
+  }
+
+  async function reloadCardImage(card){
+    const term = card.dataset.en; 
+    try { localStorage.removeItem(toKey(term)); } catch(e){}
+    const status = card.querySelector('.img-status'); status.textContent = 'Reloading...';
+    try { const dataUrl = await getRealImageBase64(term, true, true); card.querySelector('img').src = dataUrl; status.textContent = '✓'; } catch(e){ status.textContent = 'x'; }
+  }
+
+  function speak(text, lang = 'en-US', cb = () => {}, forceRate = null) {
+      if (!window.speechSynthesis) return;
+      const u = new SpeechSynthesisUtterance(text); u.lang = lang; u.rate = (forceRate !== null) ? forceRate : speechRate; u.onend = cb; window.speechSynthesis.speak(u);
+  }
+  function highlightElement(el) {
+      if (currentHighlightElement) currentHighlightElement.classList.remove('highlight');
+      if (el) { el.classList.add('highlight'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); currentHighlightElement = el; } else currentHighlightElement = null;
+  }
+  function stopReading() {
+      isReading = false; window.speechSynthesis && window.speechSynthesis.cancel(); readingQueue = []; highlightElement(null);
+      document.getElementById('readAllBtn').textContent = 'قراءة محتوى التبويب المفتوح';
+      document.querySelectorAll('.read-table-btn').forEach(btn => btn.textContent = 'Read Table');
+  }
+  function playQueue() {
+      if (!isReading || readingQueue.length === 0) { stopReading(); return; }
+      const { el, text, lang, rate } = readingQueue.shift(); highlightElement(el); speak(text, lang, playQueue, rate || null);
+  }
+    function startReading(elements, btn, isTable = false) {
+    if (isReading) { stopReading(); return; }
+    btn.textContent = 'إيقاف القراءة'; isReading = true; readingQueue = [];
+    
+    elements.forEach(el => {
+      if (isTable) {
+        const cells = el.querySelectorAll('td');
+        for (let i = 0; i < repeatCount; i++) { 
+          cells.forEach((cell) => { 
+            const spans = cell.querySelectorAll('span[lang]');
+            if (spans.length > 0) {
+              spans.forEach(span => {
+                const text = span.textContent.trim();
+                if (text) {
+                  const lang = span.getAttribute('lang') === 'en' ? 'en-US' : 'ar-EG';
+                  readingQueue.push({ el: span, text: text, lang: lang }); 
+                }
+              });
+            } else {
+              const text = cell.textContent.trim(); 
+              if (text) { 
+                const hasEnglishText = /[a-zA-Z]/.test(text) && !/[\u0600-\u06FF]/.test(text);
+                const isExplicitlyEnglish = cell.getAttribute('lang') === 'en';
+                const lang = (isExplicitlyEnglish || hasEnglishText) ? 'en-US' : 'ar-EG'; 
+                readingQueue.push({ el: cell, text: text, lang: lang }); 
+              }
+            }
+          }); 
+        }
+      } else {
+        const en = el.dataset.en, ar = el.dataset.ar;
+        for (let i = 0; i < repeatCount; i++) { 
+          readingQueue.push({ el, text: ar, lang: 'ar-EG' }); 
+          readingQueue.push({ el, text: en, lang: 'en-US' }); 
+        }
+      }
+    });
+    playQueue();
+  }
+
+  function startMemoriesReading(elements, btn) {
+    if (isReading) { stopReading(); return; }
+    btn.textContent = 'إيقاف المراجعة'; isReading = true; readingQueue = [];
+    elements.forEach(el => {
+      const en = el.dataset.en, ar = el.dataset.ar, en_spelled = en.split('').join(', '); 
+      for (let i = 0; i < 4; i++) {
+        readingQueue.push({ el, text: en, lang: 'en-US' }); readingQueue.push({ el, text: ar, lang: 'ar-EG' }); readingQueue.push({ el, text: ar, lang: 'ar-EG' }); readingQueue.push({ el, text: en, lang: 'en-US' }); readingQueue.push({ el, text: en_spelled, lang: 'en-US', rate: spellingRate });
+      }
+    });
+    playQueue();
+  }
+  function startQuickReviewReading(elements, btn) {
+    if (isReading) { stopReading(); return; }
+    btn.textContent = 'إيقاف المراجعة السريعة'; isReading = true; readingQueue = [];
+    elements.forEach(el => {
+      const en = el.dataset.en, ar = el.dataset.ar;
+      for (let i = 0; i < 2; i++) { readingQueue.push({ el, text: ar, lang: 'ar-EG' }); readingQueue.push({ el, text: en, lang: 'en-US' }); readingQueue.push({ el, text: en, lang: 'en-US' }); readingQueue.push({ el, text: ar, lang: 'ar-EG' }); }
+    });
+    playQueue();
+  }
+  function getActiveVisibleCards() { const activeTab = document.querySelector('.tab-content.active'); if(!activeTab) return []; return [...activeTab.querySelectorAll('.word-card')].filter(c => c.style.display !== 'none'); }
+
+  window.addEventListener('load', () => {
+      const defBody = document.querySelector('#definitions-table tbody'); definitions.forEach(i => defBody.innerHTML += `<tr><td lang="en">${i.word}</td><td>${i.ar}</td><td><span lang="en">${i.definition}</span><span class="translated-def" lang="ar">${i.defAr}</span></td></tr>`);
+      const verbsBody = document.querySelector('#verbs-table tbody'); verbsList.forEach(i => verbsBody.innerHTML += `<tr><td>${i.ar}</td><td lang="en">${i.present}</td><td lang="en">${i.past}</td><td lang="en">${i.pp}</td></tr>`);
+      const synBody = document.querySelector('#syn-table tbody'); synAnt.forEach(i => synBody.innerHTML += `<tr><td lang="en">${i.word}</td><td lang="en">${i.syn}</td><td lang="en">${i.ant}</td></tr>`);
+      const expBody = document.querySelector('#expressions-table tbody'); expressions.forEach(i => expBody.innerHTML += `<tr><td lang="en">${i.en}</td><td>${i.ar}</td></tr>`);
+      const affBody = document.querySelector('#affixes-table tbody'); affixes.forEach(i => affBody.innerHTML += `<tr><td lang="en" style="color:var(--neon-pink);">${i.affix}</td><td style="direction: rtl;">${i.func}</td><td lang="en">${i.ex}</td></tr>`);
+
+      const notesContainer = document.getElementById('notes-container');
+      languageNotes.forEach(note => {
+          notesContainer.innerHTML += `<div class="note-card"><h3>${note.title}</h3>${note.content}</div>`;
+      });
+
+      vocabulary.forEach(w => {
+          const isFav = difficultWords.includes(w.en) ? 'active-star' : '';
+          const html = `
+              <div class="card-tools">
+                <button class="tool-btn btn-mic" title="Mic">🎤</button>
+                <button class="tool-btn btn-star ${isFav}" title="Star">⭐</button>
+                <button class="tool-btn reload-btn" title="Reload">↻</button>
+              </div>
+              <span class="img-status">...</span>
+              <img alt="${w.en}" loading="lazy">
+              <p class="arabic-word">${w.ar}</p>
+              <h3>${w.en}</h3>
+              <div class="voice-feedback"></div>
+              <div class="card-mini-actions">
+                <button class="btn-play-here">▶️ قراءة</button>
+                <button class="btn-memo-here">🧠 تحفيظ</button>
+                <button class="btn-review-here">⚡ مراجعة</button>
+              </div>`;
+          
+          const cAll = document.createElement('div'); cAll.className = 'word-card'; cAll.dataset.en = w.en; cAll.dataset.ar = w.ar; cAll.innerHTML = html; document.getElementById('grid-all').appendChild(cAll);
+          const cSpec = document.createElement('div'); cSpec.className = 'word-card'; cSpec.dataset.en = w.en; cSpec.dataset.ar = w.ar; cSpec.innerHTML = html; if(document.getElementById('grid-'+w.type)) document.getElementById('grid-'+w.type).appendChild(cSpec);
+      });
+      document.getElementById('total-words-count').textContent = vocabulary.length;
+
+      document.querySelectorAll('.word-card').forEach(c => {
+          c.addEventListener('click', () => { if(isReading){ stopReading(); setTimeout(()=>startReading([c], {textContent:''}),100); } else { startReading([c], {textContent:''}); } });
+          c.querySelector('.btn-mic').addEventListener('click', e => { e.stopPropagation(); startVoiceLab(c); });
+          c.querySelector('.btn-star').addEventListener('click', e => { 
+              e.stopPropagation(); toggleDifficult(c, e.target); 
+              const term = c.dataset.en; const isStarred = difficultWords.includes(term);
+              document.querySelectorAll(`.word-card[data-en="${term}"] .btn-star`).forEach(btn => isStarred ? btn.classList.add('active-star') : btn.classList.remove('active-star'));
+          });
+          c.querySelector('.reload-btn').addEventListener('click', e => { e.stopPropagation(); reloadCardImage(c); });
+          
+          c.querySelector('.btn-play-here').addEventListener('click', e => { e.stopPropagation(); const vis = getActiveVisibleCards(); const idx = vis.indexOf(c); if(idx !== -1) startReading(vis.slice(idx), document.getElementById('readAllBtn')); });
+          c.querySelector('.btn-memo-here').addEventListener('click', e => { e.stopPropagation(); const vis = getActiveVisibleCards(); const idx = vis.indexOf(c); if(idx !== -1) startMemoriesReading(vis.slice(idx), document.getElementById('memoriesBtn')); });
+          c.querySelector('.btn-review-here').addEventListener('click', e => { e.stopPropagation(); const vis = getActiveVisibleCards(); const idx = vis.indexOf(c); if(idx !== -1) startQuickReviewReading(vis.slice(idx), document.getElementById('quickReviewBtn')); });
+      });
+
+      renderPractice();
+
+      document.getElementById('searchInput').addEventListener('input', e => { const term = e.target.value.toLowerCase().trim(); document.querySelectorAll('.word-card').forEach(c => c.style.display = c.dataset.en.toLowerCase().includes(term) ? 'flex' : 'none'); });
+      document.getElementById('reviewDiffBtn').addEventListener('click', () => {
+          openTab('tab-all'); const cards = document.querySelectorAll('#tab-all .word-card'); let hasDiff = false;
+          cards.forEach(c => { if(difficultWords.includes(c.dataset.en)) { c.style.display = 'flex'; hasDiff = true; } else { c.style.display = 'none'; } });
+          if(!hasDiff) { alert('No difficult words saved yet.'); cards.forEach(c => c.style.display = 'flex'); }
+      });
+      document.getElementById('readAllBtn').addEventListener('click', e => startReading(getActiveVisibleCards(), e.target));
+      document.getElementById('memoriesBtn').addEventListener('click', e => startMemoriesReading(getActiveVisibleCards(), e.target));
+      document.getElementById('quickReviewBtn').addEventListener('click', e => startQuickReviewReading(getActiveVisibleCards(), e.target));
+      document.querySelectorAll('.read-table-btn').forEach(b => b.addEventListener('click', e => { const rows = [...document.getElementById(e.target.dataset.section).querySelectorAll('tbody tr')]; startReading(rows, e.target, true); }));
+      document.getElementById('speedSlider').addEventListener('input', e => { speechRate = parseFloat(e.target.value); document.getElementById('speedValue').textContent = `سرعة القراءة: ${speechRate.toFixed(1)}x`; });
+      document.getElementById('spellingSpeedSlider').addEventListener('input', e => { spellingRate = parseFloat(e.target.value); document.getElementById('spellingSpeedValue').textContent = `سرعة التهجئة: ${spellingRate.toFixed(1)}x`; });
+      document.getElementById('modeToggleBtn').addEventListener('click', () => document.body.classList.toggle('light-mode'));
+      document.getElementById('repeatToggleBtn').addEventListener('click', e => { repeatCount = (repeatCount % 3) + 1; e.target.textContent = `تكرار: ${repeatCount}x`; });
+
+      document.getElementById('start-learning-btn').addEventListener('click', () => {
+          if(document.getElementById('userName').value.trim() && document.getElementById('userGroup').value.trim()){
+              document.getElementById('welcome-modal-overlay').classList.add('hidden'); hydrateImagesForAllCards();
+          } else { document.getElementById('modal-error-msg').style.display='block'; }
+      });
+      const dInput = document.getElementById('userDate'); if(dInput) dInput.valueAsDate = new Date();
+      document.getElementById('stop-reading-btn').addEventListener('click', stopReading);
+  });
+</script>
+</body>
+</html>
